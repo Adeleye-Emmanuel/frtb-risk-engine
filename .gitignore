@@ -1,0 +1,68 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Jupyter and notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+# Generated project outputs
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.csv
+*.parquet
+*.pkl
+*.pickle
+
+# Local logs and runtime state
+*.log
+logs/
+
+# OS-specific
+Thumbs.db
+
+# Local data folders
+data/local/
+local_data/
+
+# Security and secrets
+secrets/
+*.pem
+*.key
+
+# Keep project source tracked
+!src/**
