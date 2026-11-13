@@ -28,7 +28,8 @@ actual_order = [factor.name for factor in FACTORS]
 assert actual_order == EXPECTED_ORDER, f"Sensitivity ordering mismatch: expected {EXPECTED_ORDER}, got {actual_order}"
 
 # Sensitivities are the hedged bucket deltas from the fixed portfolio in PROJECT.md.
-# Values are in pounds per +1bp for absolute factors and per +1% for relative factors.
+# Relative option sensitivities reflect a $75m, 1m ATM call, scaled from the original
+# $20m, 3m ATM call using Black-Scholes Greeks at 20% volatility and a 2% rate.
 SENSITIVITY_VECTOR = np.array(
     [
         -370.0,
@@ -44,9 +45,9 @@ SENSITIVITY_VECTOR = np.array(
         0.0,
         -31000.0,
         0.0,
-        110000.0,
-        9000.0,
-        24000.0,
+        399657.0,
+        19551.0,
+        52135.0,
         198000.0,
     ],
     dtype=float,

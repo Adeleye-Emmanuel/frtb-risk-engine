@@ -43,6 +43,7 @@ htmlcov/
 *.jpg
 *.jpeg
 *.pdf
+*.npz
 *.csv
 *.parquet
 *.pkl

@@ -14,7 +14,7 @@ DRC), and the P&L Attribution test linking the two.
 | 10y Gilt | £50m long | GIRR |
 | CDX IG 5y | £75m protection sold | CSR non-sec |
 | Single-name CDS 5y | £50m protection bought | CSR non-sec, DRC |
-| SPX 3m ATM call | $20m notional | Equity, Vega, Curvature |
+| SPX 1m ATM call | $75m notional | Equity, Vega, Curvature |
 | GBPUSD 3m forward | $25m | FX |
 
 ## Risk factors (20)
@@ -22,7 +22,7 @@ GIRR  — GBP OIS zero curve: 1y, 2y, 5y, 10y, 30y
 CSR   — single-name spread curve: 1y, 3y, 5y, 10y
 CSR   — CDX IG spread curve: 1y, 3y, 5y, 10y
 EQ    — SPX spot
-VOL   — SPX 3m implied vol at 90% and 100% moneyness
+VOL   — SPX 1m implied vol at 90% and 100% moneyness
 FX    — GBPUSD spot
 
 ## Locked conventions
@@ -64,15 +64,26 @@ GIRR per +1bp (£):
 CSR per +1bp (£):
   single-name (protection bought): 1y −40, 3y −110, 5y +21,000, 10y 0
   CDX (protection sold):           5y −31,000
-EQ  per +1%: £110,000
-VOL per vol point: 90% strike £9,000, 100% strike £24,000
+EQ  per +1%: £399,657
+VOL per vol point: 90% strike £19,551, 100% strike £52,135
 FX  per +1%: £198,000
+
+The SPX option sensitivities are resized from the former $20m 3m ATM call to
+the $75m 1m ATM call using Black-Scholes delta and vega ratios at 20% volatility
+and a 2% rate. The shorter-dated option is revalued daily at a fixed one-day
+strike, with each day's option rolled to ATM at the prior close.
 
 ## Data
 yfinance, 3y daily: ^SPX, ^VIX, TLT, LQD, HYG, GBPUSD=X.
 Credit spread curve nodes are SYNTHESISED from LQD/HYG with a spread-vol
 overlay. This is a documented proxy, not real CDS data — label it as such in
 every output. Align dates across series, forward-fill gaps ≤2 days, drop the rest.
+GIRR and CSR reference levels are accumulated from their daily absolute shocks
+with Ornstein-Uhlenbeck mean reversion to their stated starting levels
+(κ = 0.005 for GIRR, κ = 0.10 for CSR). The faster CSR κ keeps credit reference
+levels positive over the current three-year sample with the authoritative daily
+shocks. This stabilizes reference levels over
+the multi-year sample without changing the authoritative daily shock matrix.
 
 ## Build order (one block at a time; test before advancing)
 1. Factors, history, shock matrix, sensitivity vector, RTPL + HPL vectors
