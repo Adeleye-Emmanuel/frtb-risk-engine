@@ -109,14 +109,21 @@ def plot_overlay(rtpl: np.ndarray, hpl: np.ndarray) -> None:
 
 
 if __name__ == "__main__":
-    levels, shocks, _ = build_factor_history(print_diagnostics=False)
+    levels, shocks, dates = build_factor_history(print_diagnostics=False)
     rtpl = compute_rtpl(shocks, SENSITIVITY_VECTOR, levels)
     hpl = compute_hpl(levels, shocks, SENSITIVITY_VECTOR)
 
     assert rtpl.shape == hpl.shape, f"PnL vectors differ in length: {rtpl.shape} vs {hpl.shape}"
     assert np.isfinite(rtpl).all(), "RTPL contains non-finite values"
     assert np.isfinite(hpl).all(), "HPL contains non-finite values"
-    np.savez("pnl_output.npz", rtpl=rtpl, hpl=hpl, shocks=shocks, levels=levels)
+    np.savez(
+        "pnl_output.npz",
+        rtpl=rtpl,
+        hpl=hpl,
+        shocks=shocks,
+        levels=levels,
+        dates=dates.values,
+    )
 
     plot_overlay(rtpl, hpl)
     print(f"RTPL length: {len(rtpl)}")
